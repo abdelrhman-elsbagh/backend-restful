@@ -30,16 +30,6 @@ func InitDB() (*pgx.Conn, error) {
 	return conn, nil
 }
 
-func GetDB() *pgx.Conn {
-	return dbConn
-}
-
-func CloseDB() {
-	if dbConn != nil {
-		dbConn.Close(context.Background())
-	}
-}
-
 func CreateUsersTable(ctx context.Context, conn *pgx.Conn) error {
 	_, err := conn.Exec(ctx, `
         CREATE TABLE IF NOT EXISTS users (
@@ -51,4 +41,14 @@ func CreateUsersTable(ctx context.Context, conn *pgx.Conn) error {
         );
     `)
 	return err
+}
+
+func GetDB() *pgx.Conn {
+	return dbConn
+}
+
+func CloseDB() {
+	if dbConn != nil {
+		dbConn.Close(context.Background())
+	}
 }
